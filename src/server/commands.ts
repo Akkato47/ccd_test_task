@@ -1,3 +1,16 @@
+interface CarMarketItem {
+	ownerId: number;
+	carId: number;
+	price: number;
+}
+
+interface UserCarItem {
+	model: number;
+	numberPlate: string;
+	id: number;
+	forSale: boolean;
+}
+
 mp.events.addCommand('kill', (player) => {
 	player.health = 0;
 });
@@ -13,19 +26,6 @@ mp.events.addCommand('armor', (player) => {
 mp.events.addCommand('money', (player, amount) => {
 	player.setVariable('money', +amount);
 });
-
-export interface CarMarketItem {
-	ownerId: number;
-	carId: number;
-	price: number;
-}
-
-export interface UserCarItem {
-	model: number;
-	numberPlate: string;
-	id: number;
-	forSale: boolean;
-}
 
 export const colshapes = [
 	{ x: -1609, y: -880, z: 9.58, width: 5, depth: 5, height: 20, heading: -40, lotId: 1 },
