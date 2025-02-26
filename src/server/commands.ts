@@ -121,17 +121,18 @@ mp.events.addCommand('sell', (player, amount) => {
 	previewVehicle.setVariable('preview', true);
 	previewVehicle.movable = false;
 	previewVehicle.locked = true;
-
 	previewVehicle.setVariable('market_id', car.id);
 	previewVehicle.setVariable('price', +amount);
 	previewVehicle.setVariable('numberplate', vehicle.numberPlate);
 	previewVehicle.setVariable('carModel', vehicle.getVariable('carModel'));
 	previewVehicle.engine = false;
+
 	vehicle.destroy();
 	player.putIntoVehicle(previewVehicle, 0);
 
 	market.set(closestLotId, { carId: car.id, ownerId: player.id, price: +amount });
 	playerCars[playerCars.indexOf(car)] = { ...car, forSale: true };
+	carInventory.set(player.id, playerCars);
 
 	player.call('sellCar', [car.id, closestColshape.position.x, closestColshape.position.y, closestHeading]);
 	setTimeout(() => player.removeFromVehicle(), 0);
@@ -140,6 +141,7 @@ mp.events.addCommand('sell', (player, amount) => {
 mp.events.addCommand('buy', (player) => {
 	const playerPos = player.position;
 	const playerMoney = player.getVariable('money');
+
 	let closestColshape = null;
 	let closestDistance = Infinity;
 	let closestLotId = 0;
@@ -153,7 +155,8 @@ mp.events.addCommand('buy', (player) => {
 			closestLotId = colshapes[i].lotId;
 		}
 	}
-	if (!closestColshape) {
+
+	if (!closestColshape || closestDistance > 10) {
 		return player.outputChatBox('Рядом нет рынка');
 	}
 

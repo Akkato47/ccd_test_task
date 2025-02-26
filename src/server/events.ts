@@ -26,7 +26,7 @@ mp.events.add('playerEnterColshape', (player, shape) => {
 	const lot = colshapeObjects.find((item) => item === shape);
 
 	const marketItem = market.get(+lot?.getVariable('id'));
-
+	// Тут можно раскоментировать. Я не знаю как с двух клиентов зайти...
 	// if (marketItem && marketItem.ownerId !== player.id) {
 	if (marketItem) {
 		const car = mp.vehicles.toArray().find((value) => value.getVariable('market_id') === marketItem.carId);
